@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/ec2-user/frontend/src
+cd /home/ec2-user/src
 npm start
 pm2 start npm --name "uploading app" -- start
 pm2 startup
