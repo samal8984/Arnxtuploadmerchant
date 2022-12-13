@@ -27,7 +27,7 @@ const Products = () => {
   const submitHandler=(event)=>{
     event.preventDefault();
     if(productname==='' || productdescription=== '' || productprice==='' || currency===''){
-      setMessage(' All fields are Required');
+      setMessage('All fields are Required');
       return
     }
     const requestConfig={
