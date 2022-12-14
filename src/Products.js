@@ -43,7 +43,7 @@ const Products = () => {
       productdescription: productdescription,
       productprice: productprice,
       currency: currency,
-      product_id: "254"
+      product_id: "258"
     }
     axios.post(registerUrl,requestBody).then((response) => {
       setMessage(' Registration Successful')
