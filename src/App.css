@@ -37,9 +37,29 @@
   
   
 }
+textarea{
+  resize: none;
+}
 
 body{
   background-color: #61dafb;
+}
+
+
+.productimage {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: auto;
+  width: 400px;
+  
+}
+.productimage>* {
+  flex: 1 1 auto;
+  border: 1px solid black;
+  height: 130px;
+  width: 150px;
+  margin: 20px;
 }
 
 
@@ -50,6 +70,26 @@ body{
   visibility:none;
   height:0px;
   display:none;
+}
+@media only screen and (max-width: 500px) {
+  .navbar{
+    width: 100%;
+  }
+  .products{
+    display: none;
+  }
+  .formbody{
+   margin-right: auto;
+  }
+  .productheading{
+    display: flex;
+    margin-left: 10px;
+  
+  }
+
+
+
+  
 }
 
 
