@@ -100,6 +100,10 @@ const Products = () => {
     }
     axios.post(registerUrl,requestBody).then((response) => {
       setMessage(' Registration Successful')
+      setTimeout(()=>{
+        setMessage('')
+      },3000)
+
     }).catch(error=>{
       if(error.response.status=== 401 || error.response.status === 403){
         setMessage(error.response.data.message)
