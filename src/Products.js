@@ -17,7 +17,7 @@ const Products = () => {
   const [MerchantPhNo, setMerchantPhNo]= useState('');
   const [Merchanttype, setMerchantType]= useState('');
   const [remarks, setRemarks] = useState('');
-  const [Acquireddata, setAcquiredData]= useState('');
+  const [Acquireddate, setAcquiredDate]= useState('');
   const [brand, setBrand] = useState('');
   const [dimension, setDimension]= useState('');
   const [Purchaselink, setPurchaseLink]= useState('');
@@ -62,7 +62,7 @@ const Products = () => {
       || Merchantcategory === ''   
       || brand === ''  
       || Purchaselink === ''  
-      || Acquireddata === ''  
+      || Acquireddate === ''  
       )
          {
       setMessage('All fields are Required');
@@ -89,7 +89,7 @@ const Products = () => {
       Merchanttype: Merchanttype,
       Purchaselink: Purchaselink,
       brand: brand,
-      Acquireddata: Acquireddata,
+      Acquireddate: Acquireddate,
       dimension: dimension,
 
       productname: productname,
@@ -459,13 +459,13 @@ const Products = () => {
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
     <label htmlFor="inputEmail4" 
-     className="form-label">Acquired Data <span style={{color:'red',
+     className="form-label">Acquired Date <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
 
     </div>
-    <input type="text" style={{width:'270px',
-    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={Acquireddata} onChange={event=> setAcquiredData(event.target.value) } 
+    <input type="date" style={{width:'270px',
+    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={Acquireddate} onChange={event=> setAcquiredDate(event.target.value) } 
     className="form-control" id="inputEmail4"/>
     
   </div>
