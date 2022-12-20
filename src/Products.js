@@ -575,7 +575,7 @@ const Products = () => {
 
     <button type="submit" className="btn btn-primary">Submit</button>
   </div>
-  <div  style={images.length >= 2 ?{display:'flex', marginLeft:'100px', marginTop:'-60px' }: {display:'none'} }>
+  <div  style={images.length >= 6 ?{display:'flex', marginLeft:'100px', marginTop:'-60px' }: {display:'none'} }>
               <button  onClick={uploadImages} style={imageupload ? {display:'none'}:{backgroundColor: 'green',
               width:'100px', height:'30px', border:'2px solid black', borderRadius:'15px'
               }} >SendImages</button>
