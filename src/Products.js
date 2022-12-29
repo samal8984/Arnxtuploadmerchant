@@ -2,6 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Metadata } from './layout/Metadata';
+import { Buffer } from 'buffer';
+
+import swal from 'sweetalert';
+
+
 
 
 
@@ -11,6 +16,7 @@ const Products = () => {
 
    
   const [Shopsno, setShopsNo]= useState('');
+  const [merchantName, setMerchantName]= useState('');
   const [Merchantaddress, setMerchantAddress]= useState('');
   const [Merchantcategory, setMerchantCategory]= useState('');
   const [Merchantemail, setMerchantEmail]= useState('');
@@ -35,9 +41,60 @@ const Products = () => {
 
   const [imageArray, setImageArray]= useState([]);
   const [imageupload, setImageUpload] =useState(false)
+
+  const userEmail= sessionStorage.getItem('user')
+  const emailID= JSON.parse(userEmail)
+  const p_id= emailID.email
   
 
+  let date = new Date();
+     
+  let acquiredDate= ''
+  
 
+  
+  const fileToBase64 = (file, cb) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      cb(null, reader.result)
+    }
+    reader.onerror = function (error) {
+      cb(error, null)
+    }
+  }
+
+
+  
+   
+
+
+  const fs= require('fs')
+  const removeItem=(img)=>{
+    
+    
+    setImages((oldArray)=>oldArray.filter((item)=> item !== img))
+    
+
+  
+    
+
+
+  
+   
+    
+    
+
+    
+    
+
+  }
+
+
+
+
+ 
+  
   const submitHandler=(event)=>{
     event.preventDefault();
 
@@ -61,8 +118,8 @@ const Products = () => {
       || Merchanttype === '' 
       || Merchantcategory === ''   
       || brand === ''  
-      || Purchaselink === ''  
-      || Acquireddate === ''  
+      || Purchaselink === '' 
+      || merchantName === '' 
       )
          {
       setMessage('All fields are Required');
@@ -77,10 +134,12 @@ const Products = () => {
       }
     }
   
-
+   
+  
     let id = new Date();
     let sec= id.getMilliseconds();
     const requestBody={
+      merchantName: merchantName,
       Shopsno: Shopsno,
       MerchantPhNo: MerchantPhNo,
       Merchantaddress:  Merchantaddress,
@@ -89,20 +148,24 @@ const Products = () => {
       Merchanttype: Merchanttype,
       Purchaselink: Purchaselink,
       brand: brand,
-      Acquireddate: Acquireddate,
       dimension: dimension,
 
       productname: productname,
       productdescription: productdescription,
       productprice: productprice,
       currency: currency,
-      product_id: sec.toString()
+      acquiredDate: date,
+      product_id: p_id.toString()
+      
     }
     axios.post(registerUrl,requestBody).then((response) => {
-      setMessage(' Registration Successful')
-      setTimeout(()=>{
-        setMessage('')
-      },3000)
+      swal({
+        title: "Registration Successful!",
+        text: response.data.message,
+        icon:"success",
+        button:'OK!'
+
+    })
 
     }).catch(error=>{
       if(error.response.status=== 401 || error.response.status === 403){
@@ -115,27 +178,11 @@ const Products = () => {
 
   }
 
-
-
- 
-
-  const fileToBase64 = (file, cb) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = function () {
-      cb(null, reader.result)
-    }
-    reader.onerror = function (error) {
-      cb(error, null)
-    }
-  }
-
-
- 
   
  
 
-  
+
+ 
   
 
 
@@ -150,38 +197,50 @@ const Products = () => {
 
  },[])
 
- 
+
 
  
 
   const onChange = e => {
   
   
-
+   
     
    const files = Array.from(e.target.files) 
-   
-  files.forEach(file => {
+   files.forEach(file => {
     fileToBase64(file, (err, result) => {
       if (result) {
         setFile(result)
         setFileName(file)
-        
+      
+      
+       
       }
     })
+   
+  
+ 
     
     
-    
+  
     const reader = new FileReader();
 
     reader.onload = () => {
         if (reader.readyState === 2) {
+           
             setImagesPreview(oldArray => [...oldArray, reader.result])
             setImages(oldArray => [...oldArray, file])
-        }
+
+           
+            }
+       
+       
     }
+      
+
     
     reader.readAsDataURL(file)
+    
 })
 
  
@@ -197,12 +256,17 @@ const Products = () => {
 
 
   function uploadImages(e) {
-    for(let i=0; i< images.length;i++){
+    
+
+
+    
+    for(let i=0; i<images.length;i++){
       
     const url= 'https://g98tqv1tn6.execute-api.ap-south-1.amazonaws.com/default/ImagesUploaderArnxt';
     fetch(url,{
       method: "POST",
       body: images[i].name
+    
   
 
     }).then((res)=>res.json())
@@ -210,20 +274,24 @@ const Products = () => {
       
       
 
-        console.log(res);
+      
       
       
         fetch(res.uploadURL, {
           
           method: "PUT",
           headers: {
-            "Content-Type": "image/jpeg"
+            "ContentType": "image/jpeg",
+          
           },
     
         body: images[i]
+        
     
         })
            .then((res)=>{
+           
+          
             if(res.status === 200){
               setImageUpload(true);
               setMessage('Images Uploaded Successfully');
@@ -239,6 +307,7 @@ const Products = () => {
        })
        .catch((err)=>console.log(err))
       
+      
   }
 
       
@@ -248,7 +317,7 @@ const Products = () => {
     
    
  
-
+ 
 
 
   
@@ -272,44 +341,16 @@ const Products = () => {
 
     
     <div style={{display:'flex',marginTop:'15px',marginBottom:'20px'}}>
-       <div className='products' >
-      <div  className='' style={{display:'flex', 
-      marginRight:'80px',
-      borderRadius:'10px',
-      height:'500px',
-       width:'350px', border:' 1px solid red',backgroundColor:'black',
-       flexDirection:'column'}} >
-            <div style={{borderBottom:'2px solid gray',width:'90%',display:'flex',height:'60px',
-        marginLeft:'20px', marginBottom:' 25px'}}> 
-                <h3 style={{color:'white'}}>
-                    Products
-                </h3>
-            </div>
-            <div style={{display:'flex',marginLeft:'15px'}}>
-                <div style={{display:'flex',justifyContent:'space-between'
-                ,borderBottom:'1px solid gray',width:'90%'}}>
-                    <div>
-                <h3 style={{color:'gray'}}>Product Name</h3>
+  
+       <div className='card-img-product'>
 
-
-                    </div>
-                    <div className='' >
-                <img src='' alt='' style={{height:'50px',width:'60px'}}/>
-
-
-                    </div>
-
-
-                </div>
-            </div>
-
-      </div>
-      </div>
+       </div>
+     
 
         <div>
        
          <div className=''  style={{width:'800px', border:''}} >
-            <h4 className='productheading'  style={{fontSize:'25px',color:'gray',
+            <h4 className='productheading'  style={{fontSize:'25px',color:'black',marginLeft:'150px',
              border:''}}>Please Add Your Products</h4>
            <div  style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
 
@@ -319,10 +360,10 @@ const Products = () => {
             <div  className='formdiv' style={{display:'flex',height:'auto',width:'auto',
         alignItems:'flex-start',justifyContent:'flex-start',flexDirection:'column',
         margin:' 20px', marginBottom:' 20px' }}>
-  <div className="" style={{marginBottom:'20px'}}>
+            <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
     <label htmlFor="inputEmail4" 
-     className="">No of Branch/ shops (Merchant) <span style={{color:'red',
+     className="">Merchant (Shop) Name <span style={{color:'red',
      fontSize:'13px'}}>*</span> </label>
 
      
@@ -331,11 +372,12 @@ const Products = () => {
     </div>
    
    
-    <input type="number" style={{width:'270px',
-    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={Shopsno} onChange={event=> setShopsNo(event.target.value) } 
+    <input type="text" style={{width:'270px',
+    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={merchantName} onChange={event=> setMerchantName(event.target.value) } 
     className="form-control" id="inputEmail4"/>
    
   </div>
+
   <div className="" style={{margin:' 20px',width:'300px',display:'flex', marginLeft:''}} >
     
     <label for="inputState" className="form-label" style={{marginRight:' 5px'}}>Merchant Type
@@ -354,6 +396,23 @@ const Products = () => {
       
 
     </select>
+  </div>
+  <div className="" style={{marginBottom:'20px'}}>
+    <div style={{display:'flex'}}>
+    <label htmlFor="inputEmail4" 
+     className="">No of Branch/ shops (Merchant) <span style={{color:'red',
+     fontSize:'13px'}}>*</span> </label>
+
+     
+
+
+    </div>
+   
+   
+    <input type="number" style={{width:'270px',
+    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={Shopsno} onChange={event=> setShopsNo(event.target.value) } 
+    className="form-control" id="inputEmail4"/>
+   
   </div>
   <div className=""style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
@@ -377,7 +436,7 @@ const Products = () => {
 
 
     </div>
-    <input type="number" style={{width:'270px',
+    <input type="tel" maxLength= '10' style={{width:'270px',
     borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={MerchantPhNo} onChange={event=> setMerchantPhNo(event.target.value) } 
     className="form-control" id="inputEmail4"/>
   
@@ -450,7 +509,7 @@ const Products = () => {
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
     <label htmlFor="inputEmail4" 
-     className="form-label">Purchase URL (Email id of merchant) <span style={{color:'red',
+     className="form-label">Purchase URL (Website/Email id of merchant) <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
 
@@ -460,19 +519,7 @@ const Products = () => {
     className="form-control" id="inputEmail4"/>
     
   </div>
-  <div className="" style={{marginBottom:'20px'}}>
-    <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
-     className="form-label">Acquired Date <span style={{color:'red',
-     fontSize:'13px'}}>*</span></label>
 
-
-    </div>
-    <input type="date" style={{width:'270px',
-    borderRadius:'5px', border:'2px solid rgb(219, 189, 189)'}} value={Acquireddate} onChange={event=> setAcquiredDate(event.target.value) } 
-    className="form-control" id="inputEmail4"/>
-    
-  </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
     <label htmlFor="inputEmail4" 
@@ -550,17 +597,25 @@ const Products = () => {
   </div>
   <div className='productimage' style={imageupload ? {display:'none'}: {}} >
     
-  {imagesPreview.map(img=>(
+    
+  {images.map(img=>
+     
+    <div style={{border:'', display:'flex', margin:''}} >
+
+<img src= {URL.createObjectURL(img)} key={img} alt='image preview'  style={{width:'80px', height:' 120px',marginRight:'-15px',
+      borderRadius:'10px'}}  />
+        <span onClick={()=>removeItem(img)} className='closebutton' style={{fontSize:'16px',cursor:'pointer'
+   , color:'red', float:'left',
+   border:'2px solid red', backgroundColor:'black', paddingLeft:'3px', width:'20px', height:'25px', borderRadius:'50%'}}>X</span>
+    </div>
     
     
-    <img src= {img} key={img} alt= 'Images Preview' style={{width:'80px', height:' 120px',margin:'10px',
-     borderRadius:'10px'}} /> 
-
-
     )
-    
-    ) }
-   
+  }
+
+  
+      
+ 
 
     
 
@@ -570,16 +625,16 @@ const Products = () => {
   
 
   <div style={{}} >
-
+   
 
   </div>
   
 
   <div className=""  style={{marginLeft:' 250px',marginTop:'50px',marginBottom:'30px'}}>
 
-    <button type="submit" className="btn btn-primary">Submit</button>
+    <button type="submit" className="btn btn-success">Submit</button>
   </div>
-  <div  style={images.length >= 6 ?{display:'flex', marginLeft:'100px', marginTop:'-60px' }: {display:'none'} }>
+  <div  style={images.length >= 2 ?{display:'flex', marginLeft:'100px', marginTop:'-60px' }: {display:'none'} }>
               <button  onClick={uploadImages} style={imageupload ? {display:'none'}:{backgroundColor: 'green',
               width:'100px', height:'30px', border:'2px solid black', borderRadius:'15px'
               }} >SendImages</button>
