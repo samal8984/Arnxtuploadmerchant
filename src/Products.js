@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Metadata } from './layout/Metadata';
-import { Buffer } from 'buffer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import swal from 'sweetalert';
+
+
 
 
 
@@ -350,7 +352,7 @@ const Products = () => {
         <div>
        
          <div className=''  style={{width:'800px', border:''}} >
-            <h4 className='productheading'  style={{fontSize:'25px',color:'black',marginLeft:'150px',
+            <h4 className='productheading'  style={{fontSize:'25px',color:'white',marginLeft:'150px',
              border:''}}>Please Add Your Products</h4>
            <div  style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
 
@@ -362,7 +364,7 @@ const Products = () => {
         margin:' 20px', marginBottom:' 20px' }}>
             <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="">Merchant (Shop) Name <span style={{color:'red',
      fontSize:'13px'}}>*</span> </label>
 
@@ -380,7 +382,7 @@ const Products = () => {
 
   <div className="" style={{margin:' 20px',width:'300px',display:'flex', marginLeft:''}} >
     
-    <label for="inputState" className="form-label" style={{marginRight:' 5px'}}>Merchant Type
+    <label for="inputState" className="form-label" style={{marginRight:' 5px',color:'white'}}>Merchant Type
     <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -399,7 +401,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="">No of Branch/ shops (Merchant) <span style={{color:'red',
      fontSize:'13px'}}>*</span> </label>
 
@@ -416,7 +418,7 @@ const Products = () => {
   </div>
   <div className=""style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Merchant Email <span style={{color:'red',
      fontSize:'13px'}}>*</span> </label>
 
@@ -430,7 +432,7 @@ const Products = () => {
   </div>
   <div className=""style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Merchant Phone No <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -443,7 +445,7 @@ const Products = () => {
   </div>
   <div className=""style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Merchant address (Pl put Area/Road name) <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -456,7 +458,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Merchant Category <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -469,7 +471,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Brand <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -482,7 +484,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Product Name <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -495,7 +497,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Dimensions(Length x Breadth x Hight inches) <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -508,7 +510,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Purchase URL (Website/Email id of merchant) <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -522,7 +524,7 @@ const Products = () => {
 
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
+    <label htmlFor="inputEmail4" style={{color:'white'}}
      className="form-label">Any additional remarks <span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
@@ -535,9 +537,11 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{display:'flex'}}>
-    <label htmlFor="inputEmail4" 
-      className="form-label">Description<span style={{color:'red',
+    <label htmlFor="inputEmail4" style={{color:'white'}}
+      className="form-label">Description   <span style={{color:'red',
       fontSize:'13px'}}>*</span></label>
+  
+
 
 
     </div>
@@ -552,7 +556,7 @@ const Products = () => {
   </div>
   <div className="" style={{marginBottom:'20px'}}>
     <div style={{ display:' flex'}}>
-    <label for="inputEmail4" className="form-label" >Price<span style={{color:'red',
+    <label for="inputEmail4" style={{color:'white'}} className="form-label" >Price<span style={{color:'red',
      fontSize:'13px'}}>*</span></label>
 
 
@@ -563,7 +567,7 @@ const Products = () => {
   </div>
   <div className="" style={{margin:' 20px',width:'300px',display:'flex', marginLeft:''}} >
     
-    <label for="inputState" className="form-label" style={{marginRight:' 5px'}}>Currency</label>
+    <label for="inputState" className="form-label" style={{marginRight:' 5px', color:'white'}}>Currency</label>
 
 
     
@@ -634,13 +638,14 @@ const Products = () => {
 
     <button type="submit" className="btn btn-success">Submit</button>
   </div>
-  <div  style={images.length >= 2 ?{display:'flex', marginLeft:'100px', marginTop:'-60px' }: {display:'none'} }>
-              <button  onClick={uploadImages} style={imageupload ? {display:'none'}:{backgroundColor: 'green',
-              width:'100px', height:'30px', border:'2px solid black', borderRadius:'15px'
+  <div  style={images.length >= 2 ?{display:'flex', marginLeft:'100px', marginTop:'-65px' }: {display:'none'} }>
+              <button   className='btn btn-success' onClick={uploadImages} style={imageupload ? {display:'none'}:{backgroundColor: '',
+              width:'120px', height:'35px',padding:'0px'
               }} >SendImages</button>
             </div>
 
   <div style={{marginLeft:'150px'}} >
+ 
   <p style={{}} >{message && <p style={{color:'red', fontSize:'15px'}} >Alert: {message} </p>}</p>
 
 
@@ -674,6 +679,7 @@ const Products = () => {
     
    
     </div>
+  
     <div style={{position:'sticky', marginTop:'auto'}} >
     <div style={{width:'100%', height:'30px', position:'', marginTop: ''
       , display:'flex', backgroundColor:'gray', alignItems:'center',justifyContent:'center'

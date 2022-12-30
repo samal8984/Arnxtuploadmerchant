@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import { Metadata } from './layout/Metadata';
 
 
+
 const registerUrl= 'https://4xuh6eqvr6.execute-api.ap-south-1.amazonaws.com/production/register'
 const sendotpurl= 'https://4xuh6eqvr6.execute-api.ap-south-1.amazonaws.com/production/sendotp'
 const verifyotpurl= 'https://4xuh6eqvr6.execute-api.ap-south-1.amazonaws.com/prodnew/verifyotp'
@@ -28,6 +29,9 @@ export const Register = ({history}) => {
     const [resend, setResend]= useState(false)
 
     useEffect(()=>{
+      if(res === 200){
+        history.push('/login')
+      }
       
     },[history,res])
 
@@ -184,7 +188,7 @@ const verifyOtpHandler=(event)=>{
                       
         <div className="form-floating mb-3">
                 
-                <input type="tel" className="form-control" maxLength='10'
+                <input type="tel" disabled={verifyotp ? 'disabled': ''}   className="form-control" maxLength='10'
                  onChange={event=> setNumber(event.target.value)}
                  id="floatingInputUsername" placeholder="" required autofocus/>
                 <label htmlFor="floatingInputUsername">PhoneNo</label>
@@ -219,7 +223,7 @@ const verifyOtpHandler=(event)=>{
                  onClick={verifyOtpHandler} type="submit">Verify Otp</button>
               </div>
               </div>
-              {otpverifymessage && <p style={{color:'red'}} > {otpverifymessage}</p>}
+              {otpverifymessage && <p style={{color:'red'}}> {otpverifymessage}</p>}
 
 
         
@@ -228,7 +232,7 @@ const verifyOtpHandler=(event)=>{
                 
                 <input type="text" className="form-control"
                  onChange={event=> setName(event.target.value)}
-                 id="floatingInputUsername" placeholder="myusername" required autofocus/>
+                 id="floatingInputUsername" placeholder="myname" required autofocus/>
                 <label htmlFor="floatingInputUsername">Name</label>
               </div>
 
@@ -240,6 +244,7 @@ const verifyOtpHandler=(event)=>{
               </div>
 
               <div className="form-floating mb-3">
+              
                 <input type="text" className="form-control"
                  onChange={event=> setLocation(event.target.value)} id="" placeholder="location"/>
                 <label htmlFor="floatingInputEmail">Location</label>
